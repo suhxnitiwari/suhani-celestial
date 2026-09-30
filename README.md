@@ -2,8 +2,6 @@
 
 My birth chart, a little less sciency. Pisces Sun, Gemini Moon, Taurus Rising.
 
-This started as the **Celestial** tab in the Personality section of [suhanitiwari.com](https://suhanitiwari.com), and now it has its own home.
-
 **Live site:** https://suhxnitiwari.github.io/suhani-celestial/
 
 ## What's here
