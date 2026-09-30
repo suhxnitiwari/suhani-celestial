@@ -1,0 +1,705 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Celestial</title>
+<meta name="description" content="Suhani Tiwari's birth chart: Pisces Sun, Gemini Moon, Taurus Rising. A little less sciency.">
+<style>
+    /* shared pieces from suhanitiwari.com (site.css, tests.css, _Layout) */
+    :root {
+        --page-width: 1100px;
+        --r-card: 10px;
+        --r-inset: 8px;
+        --r-pill: 999px;
+        --shadow-card: 0 1px 3px rgba(42, 24, 16, 0.06);
+        --card-border: 1px solid #EBD5D0;
+        --pad-card: 30px 32px;
+        --section-size: 1.8rem;
+        --sub-size: 1.35rem;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { font-size: 14px; }
+    @media (min-width: 768px) { html { font-size: 16px; } }
+
+    body {
+        margin: 0;
+        background: #FAF1EF;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+        color: #2A1810;
+        line-height: 1.6;
+    }
+
+    @keyframes testIn {
+        from { opacity: 0; transform: translateY(8px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .type-section {
+        background: linear-gradient(135deg, rgba(158, 90, 99, 0.1) 0%, rgba(86, 99, 74, 0.1) 100%);
+        padding: 56px 40px;
+        min-height: 100vh;
+    }
+
+    .type-container {
+        max-width: var(--page-width);
+        margin: 0 auto;
+    }
+
+    .type-header {
+        text-align: left;
+        margin-bottom: 28px;
+    }
+
+    .type-header h2 {
+        font-family: Georgia, serif;
+        font-size: var(--section-size);
+        font-weight: 700;
+        line-height: 1.25;
+        color: #2A1810;
+        margin: 0;
+    }
+
+    .type-header p {
+        margin: 6px 0 0;
+        font-size: 1.1em;
+        font-style: italic;
+        color: #56634A;
+    }
+
+    .sky-card h3 {
+        font-size: var(--sub-size) !important;
+        line-height: 1.3;
+    }
+
+    @media (max-width: 768px) {
+        .type-section { padding: 40px 16px; }
+    }
+
+    /* CELESTIAL: placements listed by what they mean, with a detail card */
+    .sky-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+        gap: 36px;
+        align-items: start;
+    }
+
+    .sky-group {
+        margin: 18px 0 8px;
+        font-size: 0.75em;
+        font-weight: 700;
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+        color: #9E5A63;
+    }
+
+    .sky-group:first-child {
+        margin-top: 0;
+    }
+
+    .sky-item {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 30px 1fr auto;
+        align-items: baseline;
+        gap: 12px;
+        padding: 12px 14px;
+        margin-bottom: 4px;
+        border: none;
+        border-radius: var(--r-inset);
+        background: transparent;
+        font: inherit;
+        text-align: left;
+        cursor: var(--cursor-hot, pointer);
+        transition: background 0.2s ease;
+    }
+
+    .sky-item:hover {
+        background: #F5E0DB;
+    }
+
+    .sky-item.active {
+        background: #8A4D57;
+    }
+
+    .sky-item:focus-visible {
+        outline: 2px solid #8A4D57;
+        outline-offset: 2px;
+    }
+
+    .sky-symbol {
+        font-size: 1.15em;
+        color: #8A4D57;
+        text-align: center;
+    }
+
+    .sky-meaning {
+        font-family: Georgia, serif;
+        font-size: 1.08em;
+        font-weight: 700;
+        color: #2A1810;
+    }
+
+    .sky-title {
+        font-size: 0.85em;
+        color: #56634A;
+        white-space: nowrap;
+    }
+
+    .sky-item.active .sky-symbol,
+    .sky-item.active .sky-meaning,
+    .sky-item.active .sky-title {
+        color: #FAF1EF;
+    }
+
+    .sky-detail {
+        position: sticky;
+        top: 96px;
+    }
+
+    .sky-card {
+        padding: var(--pad-card);
+        border-radius: var(--r-card);
+        background: #FFF8F6;
+        border: var(--card-border);
+        box-shadow: var(--shadow-card);
+        animation: testIn 0.35s ease both;
+    }
+
+    .sky-card-meaning {
+        font-size: 0.78em;
+        font-weight: 700;
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+        color: #9E5A63;
+    }
+
+    .sky-card h3 {
+        margin: 6px 0 16px;
+        font-family: Georgia, serif;
+        font-size: 2em;
+        color: #2A1810;
+    }
+
+    .sky-card-symbol {
+        color: #8A4D57;
+    }
+
+    .sky-card-label {
+        margin: 16px 0 4px;
+        font-size: 0.72em;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #56634A;
+    }
+
+    .sky-card-planet {
+        margin: 0;
+        color: #2A1810;
+        font-weight: 600;
+    }
+
+    .sky-card-text,
+    .sky-card-mine {
+        margin: 0;
+        line-height: 1.7;
+        color: #2A1810;
+    }
+
+    .sky-card-mine {
+        padding-left: 16px;
+        border-left: 3px solid #9E5A63;
+        font-family: Georgia, serif;
+    }
+
+    /* the birth chart wheel under the card */
+    .sky-wheel {
+        margin: 26px auto 0;
+        max-width: 360px;
+        text-align: center;
+    }
+
+    .sky-wheel svg {
+        display: block;
+        width: 100%;
+        height: auto;
+        overflow: visible;
+    }
+
+    .wheel-edge {
+        fill: none;
+        stroke: #C9969E;
+        stroke-width: 1;
+    }
+
+    .sky-wheel svg > circle:first-child {
+        fill: #FFF8F6;
+    }
+
+    .wheel-inner {
+        fill: none;
+        stroke: #EBD5D0;
+        stroke-width: 1;
+    }
+
+    .wheel-sign {
+        font-size: 15px;
+        fill: #9E5A63;
+        text-anchor: middle;
+        dominant-baseline: central;
+    }
+
+    .wheel-aspect {
+        stroke-width: 1;
+        opacity: 0.55;
+    }
+
+    .wheel-aspect.easy { stroke: #7F9A6B; }
+    .wheel-aspect.tense { stroke: #C27B8A; }
+
+    .wheel-asc {
+        stroke: #8A4D57;
+        stroke-width: 1.5;
+    }
+
+    .wheel-tick {
+        stroke: #8A4D57;
+        stroke-width: 1.5;
+    }
+
+    .wheel-planet {
+        cursor: var(--cursor-hot, pointer);
+        outline: none;
+    }
+
+    .wheel-planet circle {
+        fill: #FFF8F6;
+        stroke: #C9969E;
+        stroke-width: 1;
+        transition: fill 0.2s ease, stroke 0.2s ease;
+    }
+
+    .wheel-planet text {
+        font-size: 14px;
+        fill: #8A4D57;
+        text-anchor: middle;
+        dominant-baseline: central;
+        pointer-events: none;
+    }
+
+    .wheel-planet .wheel-asc-label {
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+
+    .wheel-planet:hover circle,
+    .wheel-planet:focus-visible circle {
+        stroke: #8A4D57;
+        fill: #F5E0DB;
+    }
+
+    .wheel-planet.active circle {
+        fill: #8A4D57;
+        stroke: #8A4D57;
+    }
+
+    .wheel-planet.active text {
+        fill: #FAF1EF;
+    }
+
+    .sky-wheel figcaption {
+        margin-top: 10px;
+        font-size: 0.8em;
+        font-style: italic;
+        color: #56634A;
+    }
+
+    .stars-wrong {
+        margin-top: 40px;
+        padding: 30px 32px;
+        border-radius: var(--r-card);
+        background: #F5E0DB;
+    }
+
+    .stars-wrong h3 {
+        margin: 0 0 14px;
+        font-family: Georgia, serif;
+        color: #2A1810;
+    }
+
+    .stars-wrong-item p {
+        margin: 6px 0;
+        color: #2A1810;
+    }
+
+    .stars-wrong-item span {
+        font-weight: 700;
+        color: #8A4D57;
+    }
+
+    .sky-note {
+        margin: 30px 0 0;
+        font-size: 0.85em;
+        font-style: italic;
+        text-align: center;
+        color: #56634A;
+    }
+
+    @media (max-width: 800px) {
+        .sky-layout {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .sky-detail {
+            position: static;
+        }
+
+        .sky-card {
+            padding: 24px 22px;
+        }
+    }
+</style>
+</head>
+<body>
+<main class="type-section" id="personality">
+    <div class="type-container">
+        <div class="test-panel" id="test-celestial" role="tabpanel" aria-labelledby="tab-celestial">
+            <div class="type-header">
+                <h2>Celestial</h2>
+                <p>a little less sciency</p>
+            </div>
+
+            <div class="sky-layout">
+                <div class="sky-index">
+                    <p class="sky-group">The Big Three</p>
+                        <button type="button" class="sky-item active" data-key="sun" aria-pressed="true">
+                            <span class="sky-symbol" aria-hidden="true">&#x2600;&#xFE0E;</span>
+                            <span class="sky-meaning">Who I Am</span>
+                            <span class="sky-title">Pisces Sun</span>
+                        </button>
+                        <button type="button" class="sky-item " data-key="moon" aria-pressed="false">
+                            <span class="sky-symbol" aria-hidden="true">&#x263E;&#xFE0E;</span>
+                            <span class="sky-meaning">How I Feel</span>
+                            <span class="sky-title">Gemini Moon</span>
+                        </button>
+                        <button type="button" class="sky-item " data-key="rising" aria-pressed="false">
+                            <span class="sky-symbol" aria-hidden="true">&#x2191;</span>
+                            <span class="sky-meaning">How I Show Up</span>
+                            <span class="sky-title">Taurus Rising</span>
+                        </button>
+                            <p class="sky-group">The Rest of the Sky</p>
+                        <button type="button" class="sky-item " data-key="mercury" aria-pressed="false">
+                            <span class="sky-symbol" aria-hidden="true">&#x263F;&#xFE0E;</span>
+                            <span class="sky-meaning">How I Think</span>
+                            <span class="sky-title">Pisces Mercury</span>
+                        </button>
+                        <button type="button" class="sky-item " data-key="venus" aria-pressed="false">
+                            <span class="sky-symbol" aria-hidden="true">&#x2640;&#xFE0E;</span>
+                            <span class="sky-meaning">How I Love</span>
+                            <span class="sky-title">Aquarius Venus</span>
+                        </button>
+                        <button type="button" class="sky-item " data-key="mars" aria-pressed="false">
+                            <span class="sky-symbol" aria-hidden="true">&#x2642;&#xFE0E;</span>
+                            <span class="sky-meaning">How I Act</span>
+                            <span class="sky-title">Gemini Mars</span>
+                        </button>
+                        <button type="button" class="sky-item " data-key="jupiter" aria-pressed="false">
+                            <span class="sky-symbol" aria-hidden="true">&#x2643;&#xFE0E;</span>
+                            <span class="sky-meaning">How I Grow</span>
+                            <span class="sky-title">Scorpio Jupiter</span>
+                        </button>
+                        <button type="button" class="sky-item " data-key="saturn" aria-pressed="false">
+                            <span class="sky-symbol" aria-hidden="true">&#x2644;&#xFE0E;</span>
+                            <span class="sky-meaning">Where I Grow Up</span>
+                            <span class="sky-title">Leo Saturn</span>
+                        </button>
+                        <button type="button" class="sky-item " data-key="uranus" aria-pressed="false">
+                            <span class="sky-symbol" aria-hidden="true">&#x2645;&#xFE0E;</span>
+                            <span class="sky-meaning">How I Think Differently</span>
+                            <span class="sky-title">Pisces Uranus</span>
+                        </button>
+                        <button type="button" class="sky-item " data-key="neptune" aria-pressed="false">
+                            <span class="sky-symbol" aria-hidden="true">&#x2646;&#xFE0E;</span>
+                            <span class="sky-meaning">How I Dream</span>
+                            <span class="sky-title">Aquarius Neptune</span>
+                        </button>
+                        <button type="button" class="sky-item " data-key="pluto" aria-pressed="false">
+                            <span class="sky-symbol" aria-hidden="true">&#x2647;&#xFE0E;</span>
+                            <span class="sky-meaning">How I Transform</span>
+                            <span class="sky-title">Sagittarius Pluto</span>
+                        </button>
+                </div>
+
+                <div class="sky-detail" aria-live="polite">
+                        <article class="sky-card" data-key="sun">
+                            <span class="sky-card-meaning">Who I Am</span>
+                            <h3><span class="sky-card-symbol" aria-hidden="true">&#x2600;&#xFE0E;</span> Pisces Sun</h3>
+                            <p class="sky-card-label">Placement</p>
+                            <p class="sky-card-planet">Sun in Pisces, 15&#xB0;24&#x2032;, 11th house</p>
+                            <p class="sky-card-label">What the stars say</p>
+                            <p class="sky-card-text">An imaginative, deeply empathetic core that comes alive through other people. With the Sun in the 11th house, identity grows through friendships, community and shared hopes: the self feels most itself when it belongs to something bigger.</p>
+                        </article>
+                        <article class="sky-card" data-key="moon" hidden="hidden">
+                            <span class="sky-card-meaning">How I Feel</span>
+                            <h3><span class="sky-card-symbol" aria-hidden="true">&#x263E;&#xFE0E;</span> Gemini Moon</h3>
+                            <p class="sky-card-label">Placement</p>
+                            <p class="sky-card-planet">Moon in Gemini, 6&#xB0;56&#x2032;, 2nd house</p>
+                            <p class="sky-card-label">What the stars say</p>
+                            <p class="sky-card-text">Feelings move through words and curiosity: emotions get processed by talking, reading and thinking them through, and curiosity keeps life interesting. In the 2nd house, emotional security is tied to what feels tangible and steady.</p>
+                        </article>
+                        <article class="sky-card" data-key="rising" hidden="hidden">
+                            <span class="sky-card-meaning">How I Show Up</span>
+                            <h3><span class="sky-card-symbol" aria-hidden="true">&#x2191;</span> Taurus Rising</h3>
+                            <p class="sky-card-label">Placement</p>
+                            <p class="sky-card-planet">Ascendant in Taurus, 1&#xB0;49&#x2032;, 1st house</p>
+                            <p class="sky-card-label">What the stars say</p>
+                            <p class="sky-card-text">First impressions read calm, grounded and composed: someone deliberate, warm and quietly steady, with an eye for beauty and comfort, who doesn&#x27;t rush to be known.</p>
+                        </article>
+                        <article class="sky-card" data-key="mercury" hidden="hidden">
+                            <span class="sky-card-meaning">How I Think</span>
+                            <h3><span class="sky-card-symbol" aria-hidden="true">&#x263F;&#xFE0E;</span> Pisces Mercury</h3>
+                            <p class="sky-card-label">Placement</p>
+                            <p class="sky-card-planet">Mercury in Pisces, 26&#xB0;06&#x2032;, 11th house</p>
+                            <p class="sky-card-label">What the stars say</p>
+                            <p class="sky-card-text">Thinking is intuitive and associative rather than linear: reading between the lines, catching emotional subtext, connecting ideas that don&#x27;t obviously belong together. In the 11th house, the mind lights up around people, groups and big-picture ideals.</p>
+                        </article>
+                        <article class="sky-card" data-key="venus" hidden="hidden">
+                            <span class="sky-card-meaning">How I Love</span>
+                            <h3><span class="sky-card-symbol" aria-hidden="true">&#x2640;&#xFE0E;</span> Aquarius Venus</h3>
+                            <p class="sky-card-label">Placement</p>
+                            <p class="sky-card-planet">Venus in Aquarius, 0&#xB0;37&#x2032;, 10th house</p>
+                            <p class="sky-card-label">What the stars say</p>
+                            <p class="sky-card-text">Love looks like friendship first: loyalty, respect and real mental connection over grand gestures. In the 10th house, affection shows up as support for someone&#x27;s goals and showing up for what matters to them.</p>
+                        </article>
+                        <article class="sky-card" data-key="mars" hidden="hidden">
+                            <span class="sky-card-meaning">How I Act</span>
+                            <h3><span class="sky-card-symbol" aria-hidden="true">&#x2642;&#xFE0E;</span> Gemini Mars</h3>
+                            <p class="sky-card-label">Placement</p>
+                            <p class="sky-card-planet">Mars in Gemini, 8&#xB0;19&#x2032;, 2nd house</p>
+                            <p class="sky-card-label">What the stars say</p>
+                            <p class="sky-card-text">Energy runs on curiosity and variety: quick, verbal, and happiest juggling several things at once. In the 2nd house, that drive gets pointed toward building something tangible and secure.</p>
+                        </article>
+                        <article class="sky-card" data-key="jupiter" hidden="hidden">
+                            <span class="sky-card-meaning">How I Grow</span>
+                            <h3><span class="sky-card-symbol" aria-hidden="true">&#x2643;&#xFE0E;</span> Scorpio Jupiter</h3>
+                            <p class="sky-card-label">Placement</p>
+                            <p class="sky-card-planet">Jupiter in Scorpio, 18&#xB0;51&#x2032;, 7th house</p>
+                            <p class="sky-card-label">What the stars say</p>
+                            <p class="sky-card-text">Growth comes through depth rather than breadth: through intense, honest one-on-one relationships and getting beneath surface-level explanations. Close partnerships are where the biggest lessons happen.</p>
+                        </article>
+                        <article class="sky-card" data-key="saturn" hidden="hidden">
+                            <span class="sky-card-meaning">Where I Grow Up</span>
+                            <h3><span class="sky-card-symbol" aria-hidden="true">&#x2644;&#xFE0E;</span> Leo Saturn</h3>
+                            <p class="sky-card-label">Placement</p>
+                            <p class="sky-card-planet">Saturn in Leo, 5&#xB0;11&#x2032;, 4th house</p>
+                            <p class="sky-card-label">What the stars say</p>
+                            <p class="sky-card-text">Saturn in Leo builds confidence that&#x27;s earned rather than performed. In the 4th house, it grows from strong foundations and a steady sense of home.</p>
+                        </article>
+                        <article class="sky-card" data-key="uranus" hidden="hidden">
+                            <span class="sky-card-meaning">How I Think Differently</span>
+                            <h3><span class="sky-card-symbol" aria-hidden="true">&#x2645;&#xFE0E;</span> Pisces Uranus</h3>
+                            <p class="sky-card-label">Placement</p>
+                            <p class="sky-card-planet">Uranus in Pisces, 10&#xB0;59&#x2032;, 11th house</p>
+                            <p class="sky-card-label">What the stars say</p>
+                            <p class="sky-card-text">An original streak that&#x27;s imaginative rather than loud: rethinking dated expectations about who belongs where, and reimagining what friendship and community can look like.</p>
+                        </article>
+                        <article class="sky-card" data-key="neptune" hidden="hidden">
+                            <span class="sky-card-meaning">How I Dream</span>
+                            <h3><span class="sky-card-symbol" aria-hidden="true">&#x2646;&#xFE0E;</span> Aquarius Neptune</h3>
+                            <p class="sky-card-label">Placement</p>
+                            <p class="sky-card-planet">Neptune in Aquarius, 18&#xB0;19&#x2032;, 10th house</p>
+                            <p class="sky-card-label">What the stars say</p>
+                            <p class="sky-card-text">Big, idealistic visions for career and impact: work that means something beyond the title, and a future built around ideas that help people.</p>
+                        </article>
+                        <article class="sky-card" data-key="pluto" hidden="hidden">
+                            <span class="sky-card-meaning">How I Transform</span>
+                            <h3><span class="sky-card-symbol" aria-hidden="true">&#x2647;&#xFE0E;</span> Sagittarius Pluto</h3>
+                            <p class="sky-card-label">Placement</p>
+                            <p class="sky-card-planet">Pluto in Sagittarius, 26&#xB0;36&#x2032;, 9th house</p>
+                            <p class="sky-card-label">What the stars say</p>
+                            <p class="sky-card-text">Transformation comes through learning, travel, faith and philosophy: beliefs that get questioned, deepened and rebuilt over time.</p>
+                        </article>
+
+                    <figure class="sky-wheel">
+                        <svg viewBox="0 0 400 400" role="group" aria-label="My birth chart">
+                            <circle cx="200" cy="200" r="196" class="wheel-edge" />
+                            <circle cx="200" cy="200" r="162" class="wheel-edge" />
+                            <circle cx="200" cy="200" r="112" class="wheel-inner" />
+<g>
+                                <line x1="62.3" y1="114.6" x2="33.5" y2="96.7" class="wheel-edge" />
+                                <text x="28.7" y="148.2" class="wheel-sign">&#x2648;&#xFE0E;<title>Aries</title></text>
+                                </g>
+<g>
+                                <line x1="38.1" y1="194.9" x2="4.1" y2="193.8" class="wheel-edge" />
+                                <text x="25.7" y="240.8" class="wheel-sign">&#x2649;&#xFE0E;<title>Taurus</title></text>
+                                </g>
+<g>
+                                <line x1="57.2" y1="276.5" x2="27.2" y2="292.6" class="wheel-edge" />
+                                <text x="69.5" y="322.5" class="wheel-sign">&#x264A;&#xFE0E;<title>Gemini</title></text>
+                                </g>
+<g>
+                                <line x1="114.6" y1="337.7" x2="96.7" y2="366.5" class="wheel-edge" />
+                                <text x="148.2" y="371.3" class="wheel-sign">&#x264B;&#xFE0E;<title>Cancer</title></text>
+                                </g>
+<g>
+                                <line x1="194.9" y1="361.9" x2="193.8" y2="395.9" class="wheel-edge" />
+                                <text x="240.8" y="374.3" class="wheel-sign">&#x264C;&#xFE0E;<title>Leo</title></text>
+                                </g>
+<g>
+                                <line x1="276.5" y1="342.8" x2="292.6" y2="372.8" class="wheel-edge" />
+                                <text x="322.5" y="330.5" class="wheel-sign">&#x264D;&#xFE0E;<title>Virgo</title></text>
+                                </g>
+<g>
+                                <line x1="337.7" y1="285.4" x2="366.5" y2="303.3" class="wheel-edge" />
+                                <text x="371.3" y="251.8" class="wheel-sign">&#x264E;&#xFE0E;<title>Libra</title></text>
+                                </g>
+<g>
+                                <line x1="361.9" y1="205.1" x2="395.9" y2="206.2" class="wheel-edge" />
+                                <text x="374.3" y="159.2" class="wheel-sign">&#x264F;&#xFE0E;<title>Scorpio</title></text>
+                                </g>
+<g>
+                                <line x1="342.8" y1="123.5" x2="372.8" y2="107.4" class="wheel-edge" />
+                                <text x="330.5" y="77.5" class="wheel-sign">&#x2650;&#xFE0E;<title>Sagittarius</title></text>
+                                </g>
+<g>
+                                <line x1="285.4" y1="62.3" x2="303.3" y2="33.5" class="wheel-edge" />
+                                <text x="251.8" y="28.7" class="wheel-sign">&#x2651;&#xFE0E;<title>Capricorn</title></text>
+                                </g>
+<g>
+                                <line x1="205.1" y1="38.1" x2="206.2" y2="4.1" class="wheel-edge" />
+                                <text x="159.2" y="25.7" class="wheel-sign">&#x2652;&#xFE0E;<title>Aquarius</title></text>
+                                </g>
+<g>
+                                <line x1="123.5" y1="57.2" x2="107.4" y2="27.2" class="wheel-edge" />
+                                <text x="77.5" y="69.5" class="wheel-sign">&#x2653;&#xFE0E;<title>Pisces</title></text>
+                                </g>
+                                <line x1="122.8" y1="118.9" x2="307.1" y2="167.2" class="wheel-aspect easy" />
+                                <line x1="108.4" y1="264.4" x2="206.6" y2="311.8" class="wheel-aspect easy" />
+                                <line x1="108.4" y1="264.4" x2="129.3" y2="113.2" class="wheel-aspect tense" />
+                                <line x1="109.1" y1="134.6" x2="264.6" y2="108.5" class="wheel-aspect tense" />
+                                <line x1="202.3" y1="88" x2="206.6" y2="311.8" class="wheel-aspect tense" />
+                                <line x1="110" y1="266.6" x2="206.6" y2="311.8" class="wheel-aspect easy" />
+                                <line x1="110" y1="266.6" x2="129.3" y2="113.2" class="wheel-aspect tense" />
+                                <line x1="307.1" y1="167.2" x2="168.2" y2="92.6" class="wheel-aspect tense" />
+                            <line x1="88" y1="200" x2="38" y2="200" class="wheel-asc" />
+                            <g class="wheel-planet" role="button" tabindex="0" data-key="rising" aria-label="Taurus Rising">
+                                <circle cx="70" cy="200" r="15" />
+                                <text x="70" y="200" class="wheel-asc-label">ASC</text>
+                            </g>
+                                <g>
+                                <line x1="67.5" y1="293.2" x2="75.7" y2="287.4" class="wheel-tick" />
+                                <g class="wheel-planet " role="button" tabindex="0" data-key="moon" aria-label="Gemini Moon">
+                                    <circle cx="83.2" cy="265.6" r="13" />
+                                    <text x="83.2" y="265.6">&#x263E;&#xFE0E;</text>
+                                </g>
+                                </g>
+                                <g>
+                                <line x1="69.8" y1="296.4" x2="77.8" y2="290.4" class="wheel-tick" />
+                                <g class="wheel-planet " role="button" tabindex="0" data-key="mars" aria-label="Gemini Mars">
+                                    <circle cx="100.9" cy="290.2" r="13" />
+                                    <text x="100.9" y="290.2">&#x2642;&#xFE0E;</text>
+                                </g>
+                                </g>
+                                <g>
+                                <line x1="209.5" y1="361.7" x2="208.9" y2="351.7" class="wheel-tick" />
+                                <g class="wheel-planet " role="button" tabindex="0" data-key="saturn" aria-label="Leo Saturn">
+                                    <circle cx="207.9" cy="333.8" r="13" />
+                                    <text x="207.9" y="333.8">&#x2644;&#xFE0E;</text>
+                                </g>
+                                </g>
+                                <g>
+                                <line x1="354.9" y1="152.5" x2="345.3" y2="155.5" class="wheel-tick" />
+                                <g class="wheel-planet " role="button" tabindex="0" data-key="jupiter" aria-label="Scorpio Jupiter">
+                                    <circle cx="328.1" cy="160.7" r="13" />
+                                    <text x="328.1" y="160.7">&#x2643;&#xFE0E;</text>
+                                </g>
+                                </g>
+                                <g>
+                                <line x1="293.4" y1="67.6" x2="287.7" y2="75.8" class="wheel-tick" />
+                                <g class="wheel-planet " role="button" tabindex="0" data-key="pluto" aria-label="Sagittarius Pluto">
+                                    <circle cx="277.3" cy="90.5" r="13" />
+                                    <text x="277.3" y="90.5">&#x2647;&#xFE0E;</text>
+                                </g>
+                                </g>
+                                <g>
+                                <line x1="203.4" y1="38" x2="203.2" y2="48" class="wheel-tick" />
+                                <g class="wheel-planet " role="button" tabindex="0" data-key="venus" aria-label="Aquarius Venus">
+                                    <circle cx="202.8" cy="66" r="13" />
+                                    <text x="202.8" y="66">&#x2640;&#xFE0E;</text>
+                                </g>
+                                </g>
+                                <g>
+                                <line x1="154" y1="44.7" x2="156.8" y2="54.3" class="wheel-tick" />
+                                <g class="wheel-planet " role="button" tabindex="0" data-key="neptune" aria-label="Aquarius Neptune">
+                                    <circle cx="161.9" cy="71.5" r="13" />
+                                    <text x="161.9" y="71.5">&#x2646;&#xFE0E;</text>
+                                </g>
+                                </g>
+                                <g>
+                                <line x1="97.7" y1="74.4" x2="104" y2="82.2" class="wheel-tick" />
+                                <g class="wheel-planet " role="button" tabindex="0" data-key="uranus" aria-label="Pisces Uranus">
+                                    <circle cx="127.7" cy="87.2" r="13" />
+                                    <text x="127.7" y="87.2">&#x2645;&#xFE0E;</text>
+                                </g>
+                                </g>
+                                <g>
+                                <line x1="88.3" y1="82.7" x2="95.2" y2="89.9" class="wheel-tick" />
+                                <g class="wheel-planet active" role="button" tabindex="0" data-key="sun" aria-label="Pisces Sun">
+                                    <circle cx="104.1" cy="106.4" r="13" />
+                                    <text x="104.1" y="106.4">&#x2600;&#xFE0E;</text>
+                                </g>
+                                </g>
+                                <g>
+                                <line x1="68.5" y1="105.4" x2="76.6" y2="111.3" class="wheel-tick" />
+                                <g class="wheel-planet " role="button" tabindex="0" data-key="mercury" aria-label="Pisces Mercury">
+                                    <circle cx="85.5" cy="130.3" r="13" />
+                                    <text x="85.5" y="130.3">&#x263F;&#xFE0E;</text>
+                                </g>
+                                </g>
+                        </svg>
+                        <figcaption>My birth chart. Tap a planet to read it.</figcaption>
+                    </figure>
+                </div>
+            </div>
+
+
+            <p class="sky-note">Not real science. Fun science. Think girl math, but make it cosmic.</p>
+        </div>
+    </div>
+</main>
+
+<script>
+    (function () {
+        // Celestial: clicking a placement shows its card
+        const skyItems = [...document.querySelectorAll('.sky-item')];
+        const skyCards = [...document.querySelectorAll('.sky-card')];
+        const wheelPlanets = [...document.querySelectorAll('.wheel-planet')];
+        const showSky = (key, fromWheel) => {
+            skyItems.forEach(i => {
+                const on = i.dataset.key === key;
+                i.classList.toggle('active', on);
+                i.setAttribute('aria-pressed', on);
+            });
+            wheelPlanets.forEach(p => p.classList.toggle('active', p.dataset.key === key));
+            skyCards.forEach(card => card.hidden = card.dataset.key !== key);
+            // on phones the card sits below the list, so bring it into view
+            if (!fromWheel && window.matchMedia('(max-width: 800px)').matches) {
+                document.querySelector('.sky-detail').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        };
+        skyItems.forEach(item => item.addEventListener('click', () => showSky(item.dataset.key, false)));
+        wheelPlanets.forEach(p => {
+            p.addEventListener('click', () => showSky(p.dataset.key, true));
+            p.addEventListener('keydown', e => {
+                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showSky(p.dataset.key, true); }
+            });
+        });
+    })();
+</script>
+</body>
+</html>
