@@ -311,11 +311,96 @@
         fill: #FAF1EF;
     }
 
+    /* pressable chart: signs, planets and aspects respond to taps */
+    .wheel-sign-btn {
+        cursor: var(--cursor-hot, pointer);
+        outline: none;
+    }
+
+    .wheel-sign-hit {
+        fill: transparent;
+        transition: fill 0.2s ease;
+    }
+
+    .wheel-sign-btn:hover .wheel-sign-hit,
+    .wheel-sign-btn:focus-visible .wheel-sign-hit {
+        fill: #F5E0DB;
+    }
+
+    .wheel-sign-btn.active .wheel-sign-hit {
+        fill: #EBCBC6;
+    }
+
+    .wheel-sign-btn.active .wheel-sign {
+        fill: #8A4D57;
+        font-weight: 700;
+    }
+
+    .wheel-sign-btn .wheel-sign {
+        pointer-events: none;
+    }
+
+    .wheel-sign-btn:active .wheel-sign-hit {
+        fill: #E2B9B3;
+    }
+
+    .wheel-planet {
+        transform-box: fill-box;
+        transform-origin: center;
+        transition: transform 0.18s ease;
+    }
+
+    .wheel-planet:hover,
+    .wheel-planet.hover {
+        transform: scale(1.15);
+    }
+
+    .wheel-planet:active {
+        transform: scale(0.88);
+    }
+
+    .wheel-planet.hover circle {
+        stroke: #8A4D57;
+        fill: #F5E0DB;
+    }
+
+    .wheel-planet.in-sign:not(.active) circle {
+        stroke: #8A4D57;
+        stroke-width: 2;
+    }
+
+    .wheel-aspect {
+        transition: opacity 0.25s ease, stroke-width 0.25s ease;
+    }
+
+    .sky-wheel svg.focused .wheel-aspect {
+        opacity: 0.12;
+    }
+
+    .sky-wheel svg.focused .wheel-aspect.lit {
+        opacity: 1;
+        stroke-width: 2;
+    }
+
     .sky-wheel figcaption {
         margin-top: 10px;
+        min-height: 2.6em;
         font-size: 0.8em;
         font-style: italic;
         color: #56634A;
+    }
+
+    .sky-wheel figcaption strong {
+        font-style: normal;
+        color: #8A4D57;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .wheel-planet,
+        .wheel-aspect,
+        .wheel-sign-hit {
+            transition: none;
+        }
     }
 
     .stars-wrong {
@@ -530,62 +615,74 @@
                             <circle cx="200" cy="200" r="196" class="wheel-edge" />
                             <circle cx="200" cy="200" r="162" class="wheel-edge" />
                             <circle cx="200" cy="200" r="112" class="wheel-inner" />
-<g>
+<g class="wheel-sign-btn" role="button" tabindex="0" data-sign="aries" aria-label="Aries">
+                                <path d="M33.5 96.7 A196 196 0 0 0 4.1 193.8 L38.1 194.9 A162 162 0 0 1 62.3 114.6 Z" class="wheel-sign-hit" />
                                 <line x1="62.3" y1="114.6" x2="33.5" y2="96.7" class="wheel-edge" />
                                 <text x="28.7" y="148.2" class="wheel-sign">&#x2648;&#xFE0E;<title>Aries</title></text>
                                 </g>
-<g>
+<g class="wheel-sign-btn" role="button" tabindex="0" data-sign="taurus" aria-label="Taurus">
+                                <path d="M4.1 193.8 A196 196 0 0 0 27.2 292.6 L57.2 276.5 A162 162 0 0 1 38.1 194.9 Z" class="wheel-sign-hit" />
                                 <line x1="38.1" y1="194.9" x2="4.1" y2="193.8" class="wheel-edge" />
                                 <text x="25.7" y="240.8" class="wheel-sign">&#x2649;&#xFE0E;<title>Taurus</title></text>
                                 </g>
-<g>
+<g class="wheel-sign-btn" role="button" tabindex="0" data-sign="gemini" aria-label="Gemini">
+                                <path d="M27.2 292.6 A196 196 0 0 0 96.7 366.5 L114.6 337.7 A162 162 0 0 1 57.2 276.5 Z" class="wheel-sign-hit" />
                                 <line x1="57.2" y1="276.5" x2="27.2" y2="292.6" class="wheel-edge" />
                                 <text x="69.5" y="322.5" class="wheel-sign">&#x264A;&#xFE0E;<title>Gemini</title></text>
                                 </g>
-<g>
+<g class="wheel-sign-btn" role="button" tabindex="0" data-sign="cancer" aria-label="Cancer">
+                                <path d="M96.7 366.5 A196 196 0 0 0 193.8 395.9 L194.9 361.9 A162 162 0 0 1 114.6 337.7 Z" class="wheel-sign-hit" />
                                 <line x1="114.6" y1="337.7" x2="96.7" y2="366.5" class="wheel-edge" />
                                 <text x="148.2" y="371.3" class="wheel-sign">&#x264B;&#xFE0E;<title>Cancer</title></text>
                                 </g>
-<g>
+<g class="wheel-sign-btn" role="button" tabindex="0" data-sign="leo" aria-label="Leo">
+                                <path d="M193.8 395.9 A196 196 0 0 0 292.6 372.8 L276.5 342.8 A162 162 0 0 1 194.9 361.9 Z" class="wheel-sign-hit" />
                                 <line x1="194.9" y1="361.9" x2="193.8" y2="395.9" class="wheel-edge" />
                                 <text x="240.8" y="374.3" class="wheel-sign">&#x264C;&#xFE0E;<title>Leo</title></text>
                                 </g>
-<g>
+<g class="wheel-sign-btn" role="button" tabindex="0" data-sign="virgo" aria-label="Virgo">
+                                <path d="M292.6 372.8 A196 196 0 0 0 366.5 303.3 L337.7 285.4 A162 162 0 0 1 276.5 342.8 Z" class="wheel-sign-hit" />
                                 <line x1="276.5" y1="342.8" x2="292.6" y2="372.8" class="wheel-edge" />
                                 <text x="322.5" y="330.5" class="wheel-sign">&#x264D;&#xFE0E;<title>Virgo</title></text>
                                 </g>
-<g>
+<g class="wheel-sign-btn" role="button" tabindex="0" data-sign="libra" aria-label="Libra">
+                                <path d="M366.5 303.3 A196 196 0 0 0 395.9 206.2 L361.9 205.1 A162 162 0 0 1 337.7 285.4 Z" class="wheel-sign-hit" />
                                 <line x1="337.7" y1="285.4" x2="366.5" y2="303.3" class="wheel-edge" />
                                 <text x="371.3" y="251.8" class="wheel-sign">&#x264E;&#xFE0E;<title>Libra</title></text>
                                 </g>
-<g>
+<g class="wheel-sign-btn" role="button" tabindex="0" data-sign="scorpio" aria-label="Scorpio">
+                                <path d="M395.9 206.2 A196 196 0 0 0 372.8 107.4 L342.8 123.5 A162 162 0 0 1 361.9 205.1 Z" class="wheel-sign-hit" />
                                 <line x1="361.9" y1="205.1" x2="395.9" y2="206.2" class="wheel-edge" />
                                 <text x="374.3" y="159.2" class="wheel-sign">&#x264F;&#xFE0E;<title>Scorpio</title></text>
                                 </g>
-<g>
+<g class="wheel-sign-btn" role="button" tabindex="0" data-sign="sagittarius" aria-label="Sagittarius">
+                                <path d="M372.8 107.4 A196 196 0 0 0 303.3 33.5 L285.4 62.3 A162 162 0 0 1 342.8 123.5 Z" class="wheel-sign-hit" />
                                 <line x1="342.8" y1="123.5" x2="372.8" y2="107.4" class="wheel-edge" />
                                 <text x="330.5" y="77.5" class="wheel-sign">&#x2650;&#xFE0E;<title>Sagittarius</title></text>
                                 </g>
-<g>
+<g class="wheel-sign-btn" role="button" tabindex="0" data-sign="capricorn" aria-label="Capricorn">
+                                <path d="M303.3 33.5 A196 196 0 0 0 206.2 4.1 L205.1 38.1 A162 162 0 0 1 285.4 62.3 Z" class="wheel-sign-hit" />
                                 <line x1="285.4" y1="62.3" x2="303.3" y2="33.5" class="wheel-edge" />
                                 <text x="251.8" y="28.7" class="wheel-sign">&#x2651;&#xFE0E;<title>Capricorn</title></text>
                                 </g>
-<g>
+<g class="wheel-sign-btn" role="button" tabindex="0" data-sign="aquarius" aria-label="Aquarius">
+                                <path d="M206.2 4.1 A196 196 0 0 0 107.4 27.2 L123.5 57.2 A162 162 0 0 1 205.1 38.1 Z" class="wheel-sign-hit" />
                                 <line x1="205.1" y1="38.1" x2="206.2" y2="4.1" class="wheel-edge" />
                                 <text x="159.2" y="25.7" class="wheel-sign">&#x2652;&#xFE0E;<title>Aquarius</title></text>
                                 </g>
-<g>
+<g class="wheel-sign-btn" role="button" tabindex="0" data-sign="pisces" aria-label="Pisces">
+                                <path d="M107.4 27.2 A196 196 0 0 0 33.5 96.7 L62.3 114.6 A162 162 0 0 1 123.5 57.2 Z" class="wheel-sign-hit" />
                                 <line x1="123.5" y1="57.2" x2="107.4" y2="27.2" class="wheel-edge" />
                                 <text x="77.5" y="69.5" class="wheel-sign">&#x2653;&#xFE0E;<title>Pisces</title></text>
                                 </g>
-                                <line x1="122.8" y1="118.9" x2="307.1" y2="167.2" class="wheel-aspect easy" />
-                                <line x1="108.4" y1="264.4" x2="206.6" y2="311.8" class="wheel-aspect easy" />
-                                <line x1="108.4" y1="264.4" x2="129.3" y2="113.2" class="wheel-aspect tense" />
-                                <line x1="109.1" y1="134.6" x2="264.6" y2="108.5" class="wheel-aspect tense" />
-                                <line x1="202.3" y1="88" x2="206.6" y2="311.8" class="wheel-aspect tense" />
-                                <line x1="110" y1="266.6" x2="206.6" y2="311.8" class="wheel-aspect easy" />
-                                <line x1="110" y1="266.6" x2="129.3" y2="113.2" class="wheel-aspect tense" />
-                                <line x1="307.1" y1="167.2" x2="168.2" y2="92.6" class="wheel-aspect tense" />
+                                <line x1="122.8" y1="118.9" x2="307.1" y2="167.2" class="wheel-aspect easy" data-a="sun" data-b="jupiter" data-type="trine"><title>Sun trine Jupiter</title></line>
+                                <line x1="108.4" y1="264.4" x2="206.6" y2="311.8" class="wheel-aspect easy" data-a="moon" data-b="saturn" data-type="sextile"><title>Moon sextile Saturn</title></line>
+                                <line x1="108.4" y1="264.4" x2="129.3" y2="113.2" class="wheel-aspect tense" data-a="moon" data-b="uranus" data-type="square"><title>Moon square Uranus</title></line>
+                                <line x1="109.1" y1="134.6" x2="264.6" y2="108.5" class="wheel-aspect tense" data-a="mercury" data-b="pluto" data-type="square"><title>Mercury square Pluto</title></line>
+                                <line x1="202.3" y1="88" x2="206.6" y2="311.8" class="wheel-aspect tense" data-a="venus" data-b="saturn" data-type="opposition"><title>Venus opposition Saturn</title></line>
+                                <line x1="110" y1="266.6" x2="206.6" y2="311.8" class="wheel-aspect easy" data-a="mars" data-b="saturn" data-type="sextile"><title>Mars sextile Saturn</title></line>
+                                <line x1="110" y1="266.6" x2="129.3" y2="113.2" class="wheel-aspect tense" data-a="mars" data-b="uranus" data-type="square"><title>Mars square Uranus</title></line>
+                                <line x1="307.1" y1="167.2" x2="168.2" y2="92.6" class="wheel-aspect tense" data-a="jupiter" data-b="neptune" data-type="square"><title>Jupiter square Neptune</title></line>
                             <line x1="88" y1="200" x2="38" y2="200" class="wheel-asc" />
                             <g class="wheel-planet" role="button" tabindex="0" data-key="rising" aria-label="Taurus Rising">
                                 <circle cx="70" cy="200" r="15" />
@@ -662,7 +759,7 @@
                                 </g>
                                 </g>
                         </svg>
-                        <figcaption>My birth chart. Tap a planet to read it.</figcaption>
+                        <figcaption aria-live="polite">My birth chart. Tap a planet or a sign to read it.</figcaption>
                     </figure>
                 </div>
             </div>
@@ -679,6 +776,29 @@
         const skyItems = [...document.querySelectorAll('.sky-item')];
         const skyCards = [...document.querySelectorAll('.sky-card')];
         const wheelPlanets = [...document.querySelectorAll('.wheel-planet')];
+        const wheelSigns = [...document.querySelectorAll('.wheel-sign-btn')];
+        const wheelAspects = [...document.querySelectorAll('.wheel-aspect')];
+        const wheelSvg = document.querySelector('.sky-wheel svg');
+        const caption = document.querySelector('.sky-wheel figcaption');
+        const cap = s => s[0].toUpperCase() + s.slice(1);
+        const label = key => key === 'rising' ? 'Rising' : cap(key);
+        // sign of each placement, read from its title ("Pisces Sun" -> pisces)
+        const signOf = {};
+        skyItems.forEach(i => signOf[i.dataset.key] = i.querySelector('.sky-title').textContent.split(' ')[0].toLowerCase());
+
+        const markSign = sign => {
+            wheelSigns.forEach(s => s.classList.toggle('active', s.dataset.sign === sign));
+            wheelPlanets.forEach(p => p.classList.toggle('in-sign', !!sign && signOf[p.dataset.key] === sign));
+        };
+
+        const describePlanet = key => {
+            const links = wheelAspects
+                .filter(a => a.dataset.a === key || a.dataset.b === key)
+                .map(a => `${a.dataset.type} ${label(a.dataset.a === key ? a.dataset.b : a.dataset.a)}`);
+            caption.innerHTML = `<strong>${label(key)} in ${cap(signOf[key])}</strong>` +
+                (links.length ? ` · ${links.join(', ')}` : ' · no major aspects drawn');
+        };
+
         const showSky = (key, fromWheel) => {
             skyItems.forEach(i => {
                 const on = i.dataset.key === key;
@@ -687,6 +807,11 @@
             });
             wheelPlanets.forEach(p => p.classList.toggle('active', p.dataset.key === key));
             skyCards.forEach(card => card.hidden = card.dataset.key !== key);
+            // light up this planet's aspect lines and fade the rest
+            wheelAspects.forEach(a => a.classList.toggle('lit', a.dataset.a === key || a.dataset.b === key));
+            wheelSvg.classList.add('focused');
+            markSign(null);
+            describePlanet(key);
             // on phones the card sits below the list, so bring it into view
             if (!fromWheel && window.matchMedia('(max-width: 800px)').matches) {
                 document.querySelector('.sky-detail').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -699,6 +824,31 @@
                 if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showSky(p.dataset.key, true); }
             });
         });
+
+        // tapping a sign opens the first placement in it, or notes it's empty
+        const showSign = sign => {
+            const keys = skyItems.map(i => i.dataset.key).filter(k => signOf[k] === sign);
+            if (keys.length) showSky(keys[0], true);
+            else wheelSvg.classList.remove('focused');
+            markSign(sign);
+            caption.innerHTML = `<strong>${cap(sign)}</strong> · ` +
+                (keys.length ? keys.map(label).join(', ') : 'nothing of mine lives here');
+        };
+        wheelSigns.forEach(s => {
+            s.addEventListener('click', () => showSign(s.dataset.sign));
+            s.addEventListener('keydown', e => {
+                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showSign(s.dataset.sign); }
+            });
+        });
+
+        // hovering the list previews the planet on the wheel
+        skyItems.forEach(item => {
+            const planet = wheelPlanets.find(p => p.dataset.key === item.dataset.key);
+            item.addEventListener('mouseenter', () => planet.classList.add('hover'));
+            item.addEventListener('mouseleave', () => planet.classList.remove('hover'));
+        });
+
+        showSky('sun', true);
     })();
 </script>
 </body>
